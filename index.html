@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Электронная приёмная — Goxten Contact Center</title>
-<meta name="description" content="Электронная приёмная Goxten Contact Center. Подача обращений в электронном виде.">
+<title>Электронная приёмная — Göxten Contact Centre</title>
+<meta name="description" content="Электронная приёмная Göxten Contact Centre. Подача обращений в электронном виде.">
 <meta name="theme-color" content="#0a1f3d">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%230a1f3d'/%3E%3Ctext x='50' y='50' fill='%23fff' font-family='Inter,Arial,sans-serif' font-size='34' font-weight='700' letter-spacing='-1' text-anchor='middle' dominant-baseline='central'%3EGCC%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -142,7 +142,7 @@
     display:flex;align-items:center;gap:18px;
     padding-top:26px;padding-bottom:26px;
   }
-  .emblem{flex:0 0 auto;width:64px;height:64px;display:block}
+  .emblem{flex:0 0 auto;height:54px;width:auto;display:block}
   .brand-name{
     margin:0;font-size:22px;font-weight:700;letter-spacing:-.02em;line-height:1.2;
   }
@@ -302,6 +302,57 @@
   .error svg{width:14px;height:14px;flex:0 0 auto}
   .field.invalid .error{display:flex}
 
+  /* ---- загрузка документов ---- */
+
+  .drop{
+    display:flex;flex-direction:column;align-items:center;gap:3px;
+    text-align:center;
+    padding:26px 18px;
+    border:1.5px dashed var(--line-strong);
+    border-radius:var(--r-md);
+    background:var(--surface-2);
+    cursor:pointer;
+    transition:border-color .15s,background .15s;
+  }
+  .drop:hover,.drop.over{border-color:var(--brand-600);background:var(--brand-050)}
+  .drop:focus-within{border-color:var(--brand-600);box-shadow:var(--ring)}
+  .drop svg{width:24px;height:24px;color:var(--brand-600);margin-bottom:6px}
+  @media (prefers-color-scheme: dark){ .drop svg{color:var(--brand-500)} }
+  .drop-main{font-size:14.5px;font-weight:550}
+  .drop-sub{font-size:13px;color:var(--text-3)}
+
+  .filelist{list-style:none;margin:14px 0 0;padding:0;display:flex;flex-direction:column;gap:8px}
+  .filelist li{
+    display:flex;align-items:center;gap:11px;
+    padding:9px 10px 9px 12px;
+    border:1px solid var(--line);
+    border-radius:var(--r-sm);
+    background:var(--surface-2);
+    font-size:14px;
+  }
+  .filelist .ficon{width:17px;height:17px;flex:0 0 auto;color:var(--text-3)}
+  .filelist .fname{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .filelist .fsize{
+    flex:0 0 auto;font-size:13px;color:var(--text-3);font-variant-numeric:tabular-nums;
+  }
+  .filelist .rm{
+    flex:0 0 auto;
+    display:grid;place-items:center;
+    width:26px;height:26px;padding:0;
+    color:var(--text-3);background:none;
+    border:none;border-radius:6px;cursor:pointer;
+  }
+  .filelist .rm:hover{color:var(--danger);background:var(--danger-bg)}
+  .filelist .rm:focus-visible{outline:none;box-shadow:var(--ring)}
+  .filelist .rm svg{width:15px;height:15px}
+
+  .filemsg{
+    display:flex;align-items:flex-start;gap:6px;
+    margin:10px 0 0;font-size:13px;font-weight:550;color:var(--danger);
+  }
+  .filemsg svg{width:14px;height:14px;flex:0 0 auto;margin-top:2px}
+  .filemsg.hidden{display:none}
+
   .form-foot{
     margin-top:30px;padding-top:24px;
     border-top:1px solid var(--line);
@@ -389,7 +440,12 @@
     display:flex;align-items:center;gap:11px;
     font-size:14.5px;font-weight:500;
   }
-  .offices .badge{
+  .letters{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:10px}
+  .letters li{
+    display:flex;align-items:center;gap:11px;
+    font-size:13.5px;color:var(--text-2);line-height:1.35;
+  }
+  .offices .badge,.letters .badge{
     width:30px;height:30px;flex:0 0 auto;
     display:grid;place-items:center;
     border-radius:9px;
@@ -397,7 +453,10 @@
     color:var(--brand-700);
     font-size:13px;font-weight:700;
   }
-  @media (prefers-color-scheme: dark){ .offices .badge{color:var(--brand-500)} }
+  .offices .badge svg{width:15px;height:15px}
+  @media (prefers-color-scheme: dark){
+    .offices .badge,.letters .badge{color:var(--brand-500)}
+  }
 
   /* ================= Подтверждение ================= */
 
@@ -552,32 +611,17 @@
 
 <div class="topbar">
   <div class="wrap">
-    <span>Goxten Contact Center</span>
+    <span>Göxten Contact Centre</span>
     <span class="status-dot hide-sm">Приём обращений открыт</span>
   </div>
 </div>
 
 <header class="masthead">
   <div class="wrap">
-    <svg class="emblem" viewBox="0 0 100 100" role="img" aria-label="Эмблема Goxten Contact Center">
-      <defs>
-        <linearGradient id="gcc-body" x1="0.1" y1="0" x2="0.6" y2="1">
-          <stop offset="0" stop-color="#2463c9"/>
-          <stop offset="1" stop-color="#0a1f3d"/>
-        </linearGradient>
-      </defs>
-      <path d="M50 8 L86.4 29 L86.4 71 L50 92 L13.6 71 L13.6 29 Z"
-            fill="url(#gcc-body)" stroke="url(#gcc-body)"
-            stroke-width="12" stroke-linejoin="round"/>
-      <g fill="none" stroke-linecap="round">
-        <path d="M36 30 A34 34 0 0 1 70 64" stroke="#3b7bf0" stroke-width="7" opacity=".5"/>
-        <path d="M36 39 A25 25 0 0 1 61 64" stroke="#7fb2ff" stroke-width="7" opacity=".85"/>
-        <path d="M36 48 A16 16 0 0 1 52 64" stroke="#ffffff" stroke-width="7"/>
-      </g>
-      <circle cx="36" cy="64" r="6" fill="#ffffff"/>
-    </svg>
+    <img class="emblem" src="logo.png" width="640" height="326"
+         alt="Эмблема Göxten Contact Centre">
     <div>
-      <p class="brand-name">Goxten <span>Contact Center</span></p>
+      <p class="brand-name">Göxten <span>Contact Centre</span></p>
       <p class="brand-sub">Электронный документооборот и приём обращений</p>
     </div>
   </div>
@@ -585,9 +629,9 @@
 
 <div class="wrap hero">
   <p class="eyebrow">Официальный электронный сервис</p>
-  <h1>Электронная приёмная Goxten&nbsp;Contact&nbsp;Center</h1>
+  <h1>Электронная приёмная Göxten&nbsp;Contact&nbsp;Centre</h1>
   <p class="lede">
-    Подача обращения в Goxten Contact Center в электронном виде. После отправки
+    Подача обращения в Göxten Contact Centre в электронном виде. После отправки
     вам присваивается номер талона, по которому обращение рассматривается
     сотрудниками контакт-центра.
   </p>
@@ -644,7 +688,7 @@
 
               <div class="field" data-field="place">
                 <label for="place">Место проживания</label>
-                <input type="text" id="place" name="place" autocomplete="off" maxlength="160" placeholder="Goxten, ул. Портовая, 12">
+                <input type="text" id="place" name="place" autocomplete="off" maxlength="160" placeholder="Börnlend, ул. Портовая, 12">
                 <p class="hint">Необязательное поле</p>
               </div>
             </div>
@@ -655,9 +699,7 @@
 
             <div class="field" data-field="office">
               <label for="office">Ближайший офис<span class="req">*</span></label>
-              <select id="office" name="office" class="placeholder">
-                <option value="" selected disabled>Выберите офис</option>
-              </select>
+              <select id="office" name="office"></select>
               <p class="error">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16.5v.01"/></svg>
                 Выберите ближайший офис контакт-центра.
@@ -673,6 +715,34 @@
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16.5v.01"/></svg>
                 Выберите причину обращения.
               </p>
+            </div>
+          </div>
+
+          <div class="group">
+            <p class="group-title"><span class="num">3</span> Документы</p>
+
+            <div class="field">
+              <label for="docs">Приложить документы</label>
+
+              <label class="drop" id="drop" for="docs">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 16V4M12 4L7.5 8.5M12 4l4.5 4.5"/>
+                  <path d="M4 15v3.5A1.5 1.5 0 0 0 5.5 20h13a1.5 1.5 0 0 0 1.5-1.5V15"/>
+                </svg>
+                <span class="drop-main">Перетащите файлы сюда или нажмите, чтобы выбрать</span>
+                <span class="drop-sub" id="dropSub">Изображения, PDF и документы — до 5 файлов, не более 8 МБ суммарно</span>
+              </label>
+              <input type="file" id="docs" name="docs" multiple
+                     accept="image/*,.pdf,.txt,.doc,.docx" style="display:none">
+
+              <ul class="filelist" id="fileList"></ul>
+
+              <p class="filemsg hidden" id="fileMsg">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16.5v.01"/></svg>
+                <span id="fileMsgText"></span>
+              </p>
+
+              <p class="hint">Необязательно. Файлы уходят вместе с обращением и доступны только сотрудникам контакт-центра.</p>
             </div>
           </div>
 
@@ -719,6 +789,7 @@
             <div class="pair"><dt>Офис</dt><dd id="sOffice">—</dd></div>
             <div class="pair"><dt>Причина обращения</dt><dd id="sReason">—</dd></div>
             <div class="pair"><dt>Время подачи</dt><dd id="sTime">—</dd></div>
+            <div class="pair"><dt>Документы</dt><dd id="sDocs">—</dd></div>
           </dl>
         </div>
 
@@ -745,7 +816,7 @@
         </li>
         <li>
           <b>Присвоение талона</b>
-          <span>Номер выдаётся автоматически по выбранному офису.</span>
+          <span>Литера соответствует причине обращения, номер выдаётся автоматически.</span>
         </li>
         <li>
           <b>Рассмотрение</b>
@@ -759,6 +830,11 @@
       <ul class="offices" id="officeList"></ul>
     </div>
 
+    <div class="side">
+      <h3>Литеры талонов</h3>
+      <ul class="letters" id="letterList"></ul>
+    </div>
+
     <p class="side-note">
       <strong>Важно.</strong> Сервис относится к игровому процессу.
       Указывайте сведения персонажа, а не реальные персональные данные.
@@ -769,7 +845,7 @@
 
 <footer>
   <div class="wrap">
-    <span><strong>Goxten Contact Center</strong> · Электронный документооборот</span>
+    <span><strong>Göxten Contact Centre</strong> · Электронный документооборот</span>
     <span class="fine">Игровой сервис Minecraft RP. Все сведения и организации вымышлены.</span>
   </div>
 </footer>
@@ -783,26 +859,33 @@
 const DISCORD_WEBHOOK_URL = "https://discord.com/api/webhooks/1550237743789908072/s_VftQyonzYwARZUk-9jnPm41Q5D9NUr9eQ00iOB7GizPBqsqGP57DNhMuCXFwzGoKgX";
 
 /* Офисы. Чтобы добавить новый — допишите строку.
-   letter = буква талона, key = ключ счётчика (должен быть уникальным). */
+   Если офис один, он подставляется в форму сразу. */
 const OFFICES = [
-  { name: "Goxten",   letter: "G", key: "goxten"   },
-  { name: "Bernlend", letter: "B", key: "bernlend" }
+  { name: "Börnlend" }
 ];
 
-/* Причины обращения. Чтобы добавить новую — допишите строку. */
+/* Причины обращения. letter — литера талона для этой причины,
+   у каждой причины своя нумерация (A-001, B-001 и так далее).
+   Чтобы добавить новую причину — допишите строку со свободной буквой. */
 const REASONS = [
-  "Оформление гражданства",
-  "Оформление домового имущества",
-  "Образование (институт, школа)",
-  "Медицина",
-  "Регистрация государства в Евросоюз"
+  { name: "Оформление гражданства",             letter: "A" },
+  { name: "Оформление домового имущества",      letter: "B" },
+  { name: "Образование (институт, школа)",      letter: "C" },
+  { name: "Медицина",                           letter: "D" },
+  { name: "Регистрация государства в Евросоюз", letter: "G" }
 ];
 
 /* Пространство имён внешнего счётчика талонов */
 const COUNTER_NAMESPACE = "goxten-cc-tickets";
 
-/* Сколько цифр в номере талона: 3 → G-047 */
+/* Сколько цифр в номере талона: 3 → A-047 */
 const TICKET_DIGITS = 3;
+
+/* Ограничения на приложенные документы.
+   Discord не принимает вложения больше ~8 МБ за одно сообщение
+   (на сервере с бустами лимит выше — тогда можно поднять MAX_TOTAL_MB). */
+const MAX_FILES = 5;
+const MAX_TOTAL_MB = 8;
 
 /* ====================================================================== */
 
@@ -818,6 +901,12 @@ const warnBox    = $("warnBox");
 
 /* ---------- Заполнение списков ---------- */
 
+const PIN_ICON =
+  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" ' +
+  'stroke-linecap="round" stroke-linejoin="round">' +
+  '<path d="M12 21s7-5.6 7-11a7 7 0 1 0-14 0c0 5.4 7 11 7 11z"/>' +
+  '<circle cx="12" cy="10" r="2.6"/></svg>';
+
 OFFICES.forEach((o, i) => {
   const opt = document.createElement("option");
   opt.value = String(i);
@@ -827,23 +916,163 @@ OFFICES.forEach((o, i) => {
   const li = document.createElement("li");
   const badge = document.createElement("span");
   badge.className = "badge";
-  badge.textContent = o.letter;
+  badge.innerHTML = PIN_ICON;
   li.appendChild(badge);
   li.appendChild(document.createTextNode(o.name));
   $("officeList").appendChild(li);
 });
 
-REASONS.forEach((r) => {
+REASONS.forEach((r, i) => {
   const opt = document.createElement("option");
-  opt.value = r;
-  opt.textContent = r;
+  opt.value = String(i);
+  opt.textContent = r.name;
   reasonSel.appendChild(opt);
+
+  const li = document.createElement("li");
+  const badge = document.createElement("span");
+  badge.className = "badge";
+  badge.textContent = r.letter;
+  li.appendChild(badge);
+  li.appendChild(document.createTextNode(r.name));
+  $("letterList").appendChild(li);
 });
 
-/* Серый текст плейсхолдера, пока ничего не выбрано */
-[officeSel, reasonSel].forEach((sel) => {
-  sel.addEventListener("change", () => sel.classList.toggle("placeholder", sel.value === ""));
+/* Серый текст плейсхолдера, пока причина не выбрана */
+reasonSel.addEventListener("change", () => {
+  reasonSel.classList.toggle("placeholder", reasonSel.value === "");
 });
+
+/* ---------- Приложенные документы ---------- */
+
+const dropZone = $("drop");
+const fileInput = $("docs");
+const fileListEl = $("fileList");
+const fileMsg = $("fileMsg");
+
+const attachments = [];
+
+function fmtSize(bytes) {
+  return bytes < 1048576
+    ? Math.max(1, Math.round(bytes / 1024)) + " КБ"
+    : (bytes / 1048576).toFixed(1).replace(".", ",") + " МБ";
+}
+
+function totalSize() {
+  return attachments.reduce((sum, f) => sum + f.size, 0);
+}
+
+function showFileMsg(text) {
+  if (text) {
+    $("fileMsgText").textContent = text;
+    fileMsg.classList.remove("hidden");
+  } else {
+    fileMsg.classList.add("hidden");
+  }
+}
+
+const DOC_ICON =
+  '<svg class="ficon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" ' +
+  'stroke-linecap="round" stroke-linejoin="round">' +
+  '<path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/>' +
+  '<path d="M14 3v5h5"/></svg>';
+
+const X_ICON =
+  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" ' +
+  'stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>';
+
+function renderFiles() {
+  fileListEl.innerHTML = "";
+
+  attachments.forEach((f, i) => {
+    const li = document.createElement("li");
+    li.innerHTML = DOC_ICON;
+
+    const name = document.createElement("span");
+    name.className = "fname";
+    name.textContent = f.name;
+
+    const size = document.createElement("span");
+    size.className = "fsize";
+    size.textContent = fmtSize(f.size);
+
+    const rm = document.createElement("button");
+    rm.type = "button";
+    rm.className = "rm";
+    rm.innerHTML = X_ICON;
+    rm.setAttribute("aria-label", "Убрать файл " + f.name);
+    rm.addEventListener("click", () => {
+      attachments.splice(i, 1);
+      showFileMsg("");
+      renderFiles();
+    });
+
+    li.appendChild(name);
+    li.appendChild(size);
+    li.appendChild(rm);
+    fileListEl.appendChild(li);
+  });
+
+  $("dropSub").textContent = attachments.length
+    ? "Выбрано " + attachments.length + " из " + MAX_FILES + " · " + fmtSize(totalSize()) +
+      " из " + MAX_TOTAL_MB + " МБ"
+    : "Изображения, PDF и документы — до " + MAX_FILES + " файлов, не более " +
+      MAX_TOTAL_MB + " МБ суммарно";
+}
+
+function addFiles(list) {
+  const problems = [];
+
+  for (const f of Array.from(list)) {
+    if (attachments.length >= MAX_FILES) {
+      problems.push("Больше " + MAX_FILES + " файлов приложить нельзя.");
+      break;
+    }
+    if (attachments.some((x) => x.name === f.name && x.size === f.size)) continue;
+    if (f.size === 0) {
+      problems.push("Файл «" + f.name + "» пустой.");
+      continue;
+    }
+    if (totalSize() + f.size > MAX_TOTAL_MB * 1048576) {
+      problems.push("Файл «" + f.name + "» не помещается: суммарный объём ограничен " +
+                    MAX_TOTAL_MB + " МБ.");
+      continue;
+    }
+    attachments.push(f);
+  }
+
+  showFileMsg(problems.length ? problems[0] : "");
+  renderFiles();
+}
+
+fileInput.addEventListener("change", () => {
+  addFiles(fileInput.files);
+  fileInput.value = "";
+});
+
+["dragenter", "dragover"].forEach((ev) => {
+  dropZone.addEventListener(ev, (e) => {
+    e.preventDefault();
+    dropZone.classList.add("over");
+  });
+});
+
+["dragleave", "dragend", "drop"].forEach((ev) => {
+  dropZone.addEventListener(ev, () => dropZone.classList.remove("over"));
+});
+
+dropZone.addEventListener("drop", (e) => {
+  e.preventDefault();
+  if (e.dataTransfer && e.dataTransfer.files) addFiles(e.dataTransfer.files);
+});
+
+/* Не даём браузеру открывать файл, если промахнулись мимо зоны */
+["dragover", "drop"].forEach((ev) => {
+  window.addEventListener(ev, (e) => {
+    if (!dropZone.contains(e.target)) e.preventDefault();
+  });
+});
+
+renderFiles();
 
 /* ---------- Валидация ---------- */
 
@@ -888,7 +1117,7 @@ function validate() {
     age: age,
     place: $("place").value.trim() || "не указано",
     office: OFFICES[Number(office)],
-    reason: reason
+    reason: REASONS[Number(reason)]
   };
 }
 
@@ -925,10 +1154,12 @@ const COUNTER_SOURCES = [
   }
 ];
 
-async function nextTicketNumber(office) {
+async function nextTicketNumber(reason) {
+  const key = "litera-" + reason.letter.toLowerCase();
+
   for (const src of COUNTER_SOURCES) {
     try {
-      const data = await fetchJSON(src.url(COUNTER_NAMESPACE, office.key), 5000);
+      const data = await fetchJSON(src.url(COUNTER_NAMESPACE, key), 5000);
       const n = Number(src.pick(data));
       if (Number.isFinite(n) && n > 0) {
         return { n: n, exact: true, source: src.name };
@@ -938,7 +1169,7 @@ async function nextTicketNumber(office) {
     }
   }
 
-  /* Фолбэк: номер из времени подачи — ЧЧММ (например G-2306).
+  /* Фолбэк: номер из времени подачи — ЧЧММ (например A-2306).
      Сквозной порядок не гарантируется, но в пределах суток номера уникальны. */
   const d = new Date();
   const pad = (v) => String(v).padStart(2, "0");
@@ -946,42 +1177,67 @@ async function nextTicketNumber(office) {
   return { n: Number(stamp), exact: false, source: "fallback" };
 }
 
-function formatTicket(office, num) {
-  return office.letter + "-" + String(num).padStart(TICKET_DIGITS, "0");
+function formatTicket(reason, num) {
+  return reason.letter + "-" + String(num).padStart(TICKET_DIGITS, "0");
 }
 
 /* ---------- Отправка в Discord ---------- */
 
-function buildEmbed(data, ticket, when) {
+function buildEmbed(data, ticket, when, files) {
+  const fields = [
+    { name: "Талон",             value: ticket,           inline: true  },
+    { name: "Офис",              value: data.office.name, inline: true  },
+    { name: "Возраст",           value: String(data.age), inline: true  },
+    { name: "ФИО персонажа",     value: data.fio,         inline: false },
+    { name: "Место проживания",  value: data.place,       inline: false },
+    { name: "Причина обращения", value: data.reason.name, inline: false },
+    { name: "Время подачи",      value: when,             inline: false }
+  ];
+
+  if (files.length) {
+    fields.push({
+      name: "Приложенные документы (" + files.length + ")",
+      value: files.map((f) => "• " + f.name + " — " + fmtSize(f.size))
+                  .join("\n").slice(0, 1020),
+      inline: false
+    });
+  }
+
   return {
-    username: "Goxten Contact Center — Электронная приёмная",
+    username: "Göxten Contact Centre — Электронная приёмная",
     embeds: [{
-      title: "Новое обращение в Goxten Contact Center",
+      title: "Новое обращение в Göxten Contact Centre",
       color: 1790120,
-      fields: [
-        { name: "Талон",             value: ticket,           inline: true  },
-        { name: "Офис",              value: data.office.name, inline: true  },
-        { name: "Возраст",           value: String(data.age), inline: true  },
-        { name: "ФИО персонажа",     value: data.fio,         inline: false },
-        { name: "Место проживания",  value: data.place,       inline: false },
-        { name: "Причина обращения", value: data.reason,      inline: false },
-        { name: "Время подачи",      value: when,             inline: false }
-      ],
-      footer: { text: "Goxten Contact Center · Электронный документооборот" },
+      fields: fields,
+      footer: { text: "Göxten Contact Centre · Электронный документооборот" },
       timestamp: new Date().toISOString()
     }]
   };
 }
 
-async function sendToDiscord(payload) {
+async function sendToDiscord(payload, files) {
   if (!DISCORD_WEBHOOK_URL || DISCORD_WEBHOOK_URL.indexOf("/api/webhooks/") === -1) {
     throw new Error("Webhook URL не настроен");
   }
-  const res = await fetch(DISCORD_WEBHOOK_URL, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(payload)
-  });
+
+  let init;
+
+  if (files.length) {
+    /* С вложениями Discord ждёт multipart: JSON в payload_json, файлы в files[N].
+       Content-Type ставит сам браузер вместе с boundary — руками его не задаём. */
+    const fd = new FormData();
+    fd.append("payload_json", JSON.stringify(payload));
+    files.forEach((f, i) => fd.append("files[" + i + "]", f, f.name));
+    init = { method: "POST", body: fd };
+  } else {
+    init = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+    };
+  }
+
+  const res = await fetch(DISCORD_WEBHOOK_URL, init);
   if (!res.ok) throw new Error("Discord HTTP " + res.status);
 }
 
@@ -993,9 +1249,13 @@ form.addEventListener("submit", async (e) => {
   const data = validate();
   if (!data) return;
 
+  const files = attachments.slice();
+
   submitBtn.disabled = true;
   submitBtn.classList.add("loading");
-  $("submitLabel").textContent = "Отправка заявления…";
+  $("submitLabel").textContent = files.length
+    ? "Отправка заявления и документов…"
+    : "Отправка заявления…";
 
   const now = new Date();
   const when = now.toLocaleString("ru-RU", {
@@ -1003,13 +1263,13 @@ form.addEventListener("submit", async (e) => {
     hour: "2-digit", minute: "2-digit"
   });
 
-  const counter = await nextTicketNumber(data.office);
-  const ticket  = formatTicket(data.office, counter.n);
+  const counter = await nextTicketNumber(data.reason);
+  const ticket  = formatTicket(data.reason, counter.n);
 
   let discordOk = true;
   let discordErr = "";
   try {
-    await sendToDiscord(buildEmbed(data, ticket, when));
+    await sendToDiscord(buildEmbed(data, ticket, when, files), files);
   } catch (err) {
     discordOk = false;
     discordErr = err && err.message ? err.message : String(err);
@@ -1018,21 +1278,26 @@ form.addEventListener("submit", async (e) => {
   /* Подтверждение */
   $("ticketNumber").textContent = ticket;
   $("confirmText").textContent =
-    "Талон №" + ticket + ". Ваше обращение принято Goxten Contact Center, ожидайте рассмотрения.";
+    "Талон №" + ticket + ". Ваше обращение принято Göxten Contact Centre, ожидайте рассмотрения.";
 
   $("sFio").textContent    = data.fio;
   $("sAge").textContent    = String(data.age);
   $("sPlace").textContent  = data.place;
   $("sOffice").textContent = data.office.name;
-  $("sReason").textContent = data.reason;
+  $("sReason").textContent = data.reason.name;
   $("sTime").textContent   = when;
+  $("sDocs").textContent   = files.length
+    ? files.map((f) => f.name).join(", ")
+    : "не приложены";
 
   const warns = [];
   if (!counter.exact) {
     warns.push("Счётчик талонов временно недоступен — номер присвоен по времени подачи.");
   }
   if (!discordOk) {
-    warns.push("Обращение не удалось передать в канал контакт-центра (" + discordErr + "). Сообщите об этом администрации.");
+    warns.push("Обращение" + (files.length ? " и документы" : "") +
+               " не удалось передать в канал контакт-центра (" + discordErr +
+               "). Сообщите об этом администрации.");
   }
   if (warns.length) {
     $("warnText").textContent = warns.join(" ");
@@ -1070,8 +1335,10 @@ $("againBtn").addEventListener("click", () => {
   form.reset();
   officeSel.selectedIndex = 0;
   reasonSel.selectedIndex = 0;
-  officeSel.classList.add("placeholder");
   reasonSel.classList.add("placeholder");
+  attachments.length = 0;
+  showFileMsg("");
+  renderFiles();
   ["fio", "age", "office", "reason"].forEach((n) => setInvalid(n, false));
   result.classList.remove("shown");
   warnBox.classList.add("hidden");
